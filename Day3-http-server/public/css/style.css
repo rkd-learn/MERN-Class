@@ -1,0 +1,12 @@
+body {
+  height: 100vh;
+  display: flex;
+  background-color: burlywood;
+  justify-content: center;
+  align-items: center;
+}
+
+img{
+  width: auto;
+  height: 70vh;
+}
