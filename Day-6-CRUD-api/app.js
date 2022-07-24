@@ -4,6 +4,8 @@ require("dotenv").config()
 
 const Logger = require("./middleware/logger")
 
+require("./db/connection")
+
 const productRoutes = require("./routes/product")
 
 const app = express();
