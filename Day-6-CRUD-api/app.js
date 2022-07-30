@@ -21,5 +21,3 @@ app.use("/product", productRoutes);
 app.listen(port,()=>{
     console.log(`app is running on Port ${port}`)
 });
-
-
