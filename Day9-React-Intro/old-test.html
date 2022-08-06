@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>this is sample</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <h1>User</h1>
+  <span>Num 1:</span><input type="number" id="num1" value="1"/>
+  <span>Num 2:</span><input type="number" id="num2" />
+  <button onclick="onClick()">Add</button>
+  <div id="total">SUM:</div>
+  <script>
+    function onClick(){ 
+    let num1 = document.querySelector("#num1").value;
+    let num2 = document.querySelector("#num2").value;
+
+    let total = parseInt(num1) + parseInt(num2);
+    
+      let totalEl = document.querySelector("#total")
+      totalEl.innerText="SUM of "+num1 +" plus " +num2+ " is equal to "+total;
+    }
+  </script>
+
+</body>
+</html>

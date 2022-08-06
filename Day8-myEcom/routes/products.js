@@ -19,22 +19,22 @@ router.put("/:id", async (req, res) => {
 
     const oldData = await Product.findById(id);
 
-    const newData  = req.body;
+    const newData = req.body;
 
-    if(newData.price){
-        oldData.price = newData.price;
+    if (newData.price) {
+      oldData.price = newData.price;
     }
 
-    if(newData.name){
-        oldData.name = newData.name;
+    if (newData.name) {
+      oldData.name = newData.name;
     }
 
-    if(newData.brand){
-        oldData.brand = newData.brand
+    if (newData.brand) {
+      oldData.brand = newData.brand
     }
 
-    if(newData.size){
-        oldData.size = newData.size;
+    if (newData.size) {
+      oldData.size = newData.size;
     }
 
     const updatedData = await oldData.save();
@@ -56,7 +56,6 @@ router.delete("/:id", async (req, res) => {
 // Create new product
 router.post("/", async (req, res) => {
   // Business logic
-
   const data = req.body;
 
   const newProduct = new Product({
