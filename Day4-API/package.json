@@ -4,7 +4,7 @@
   "description": "REST API",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.mjs"
   },
   "keywords": [],
   "author": "",
@@ -14,5 +14,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
+  },
+  "volta": {
+    "node": "16.16.0"
   }
 }

@@ -3,13 +3,13 @@ import './App.css';
 
 function App() {
 
-  const [num1,setNum1] = useState(2);
+  const [num1, setNum1] = useState(2);
 
-  const [err,setErr] = useState()
+  const [err, setErr] = useState()
 
   const [num2, setNum2] = useState(4);
 
-  const [result,setResult] = useState(0)
+  const [result, setResult] = useState(0)
 
   return (
     <div>
