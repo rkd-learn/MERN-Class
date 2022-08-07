@@ -12,14 +12,14 @@ router.get("/", async (req, res) => {
   res.send(carts);
 });
 
-router.get("/:id",async (req,res)=>{
-      const id = req.params.id;
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
 
-    const cartData = await Cart.findById(id)
-      .populate("productID")
-      .populate("userID");
+  const cartData = await Cart.findById(id)
+    .populate("productID")
+    .populate("userID");
 
-    res.send(cartData)
+  res.send(cartData)
 
 })
 
@@ -77,3 +77,37 @@ router.post("/", async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ES5
+// Moudle import export
+
+// var express = require("express");
+// module.exports = express
+// var express = require("express");
+
+
+// ES6 => 2015
+// import express from "express";
+// export express;
+
+// let
+// const
+
+// => compile/transpile to ES5
+
+
