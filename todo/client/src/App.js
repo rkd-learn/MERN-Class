@@ -1,24 +1,48 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import './App.css';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
 
-import { Container } from 'reactstrap'
+import Login from './components/Login';
 
-// import { Todo } from './container/Todo';
-// import CreateTodo from './container/createTodo';
-
+import Home from './components/Home';
 import NotFound from './components/NotFound';
 
+import { Navigation } from './components/common/Navigation';
+
+
+import { UserContext } from "./components/context/UserContext";
+import About from './components/About';
+import User from './components/User';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container } from 'reactstrap';
+import { useState } from 'react';
+
 function App() {
+
+  // conditinal oprator
+
+  const [user, setUser] = useState({});
+
   return (
-    <Container>
-      <h1>Todo</h1>
-      <BrowserRouter>
-        <Routes path='/todo'>
-          <Route path="/" element={NotFound} />
+    <UserContext.Provider value={{
+      user,
+      setUser
+    }}>
+      <Container>
+        <Navigation />
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/user/:name" element={<User />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </Container>
+      </Container>
+    </UserContext.Provider>
   );
 }
 
