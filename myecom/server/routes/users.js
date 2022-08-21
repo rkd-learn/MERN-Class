@@ -5,7 +5,7 @@ const router = express.Router();
 const User = require("../db/models/users");
 
 // list all user
-router.get("/", async (req, res) => {
+router.get("/list", async (req, res) => {
   const users = await User.find({});
 
   res.send(users);

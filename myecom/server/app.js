@@ -1,9 +1,9 @@
 const express = require("express");
+const cors = require("cors");
 
 require("dotenv").config();
 
 const logger = require("./middleware/logger");
-
 const userRoute = require("./routes/users");
 const productRoute = require("./routes/products");
 const cartRoute = require("./routes/cart")
@@ -18,10 +18,12 @@ app.use(express.json());
 
 app.use(logger);
 
+app.use(cors());
+
 app.use("/user", userRoute);
 app.use("/product", productRoute);
 
-app.use("/cart",cartRoute)
+app.use("/cart", cartRoute)
 
 
 app.listen(PORT, () => {
