@@ -5,3 +5,9 @@ ul{
 ul li{
   margin-right: 1rem;
 }
+
+.active{
+  color: #fff;
+  background-color: green;
+  padding: 0.5rem;
+}
