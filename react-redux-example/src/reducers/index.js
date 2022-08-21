@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 
-import { updateNumber } from "./updateNumber"
+import { globalNumber } from "./updateNumber"
 
 export const reducers = combineReducers({
-  updateNumber
+  globalNumber
 });
 
