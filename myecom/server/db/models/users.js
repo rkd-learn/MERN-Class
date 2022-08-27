@@ -6,14 +6,16 @@ const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
-},
+  },
 
-email: {
+  email: {
     type: String,
     unique: true,
   },
 
   address: String,
+
+  password: String
 });
 
 module.exports = mongoose.model("Users", UserSchema);
