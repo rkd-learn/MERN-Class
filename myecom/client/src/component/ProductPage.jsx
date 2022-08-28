@@ -6,18 +6,42 @@ export const Product = () => {
 
   const [products, setProducts] = useState({});
 
+  const [err, setErr] = useState(null)
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await Axios(
-        'http://localhost:9000/product'
-      );
-      setIsLoading(false);
-      setProducts(result.data);
+      try {
+
+        const token = localStorage.getItem("ACCESS_TOKEN");
+
+        const _headers = {}
+
+        if (token) {
+          _headers.Authorization = `Bearer ${token}`
+        }
+
+
+        const result = await Axios(
+          'http://localhost:9000/product',
+          {
+            headers: _headers
+          }
+        );
+        setIsLoading(false);
+        setProducts(result.data);
+      }
+      catch (e) {
+        setErr(e.response.data.error)
+      }
     }
     fetchData();
   }, []);
+
+  if (err) {
+    return <h1>{err}</h1>
+  }
 
 
   if (isLoading) {

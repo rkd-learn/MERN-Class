@@ -6,7 +6,7 @@ function verifyUser(req, res, next) {
 
   if (!token) {
     return res.status(400).send({
-      error: "You haven't passed bearer auth  header"
+      error: "Not authorize"
     })
   }
 

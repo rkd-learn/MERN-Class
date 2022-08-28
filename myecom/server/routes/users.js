@@ -53,7 +53,7 @@ router.post("/login", async (req, res) => {
     })
 
     if (!dbUser) {
-      res.status(400).json({
+      return res.status(400).json({
         error: "User not found"
       })
     }
@@ -61,7 +61,7 @@ router.post("/login", async (req, res) => {
     const isPasswordMatched = await bcrypt.compare(password, dbUser.password)
 
     if (!isPasswordMatched) {
-      res.status(400).json({
+      return res.status(400).json({
         error: "password not matched"
       })
     }
@@ -75,7 +75,7 @@ router.post("/login", async (req, res) => {
 
   } catch (error) {
     console.error(error)
-    res.status(400).send(error.message);
+    return res.status(400).send(error.message);
   }
 });
 
@@ -88,7 +88,7 @@ router.get("/list", validateUser, async (req, res) => {
   res.send(users);
 });
 
-router.get("/byid/:id", async (req, res) => {
+router.get("/byid/:id", validateUser, async (req, res) => {
   const id = req.params.id;
 
   const user = await User.findById(id);
@@ -97,7 +97,7 @@ router.get("/byid/:id", async (req, res) => {
 });
 
 // user update
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id", validateUser, async (req, res) => {
   const id = req.params.id;
 
   const dataToUpdate = req.body;
@@ -121,7 +121,7 @@ router.put("/update/:id", async (req, res) => {
   res.send(updatedUser);
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", validateUser, async (req, res) => {
   const id = req.params.id;
 
   const deletedUser = await User.findByIdAndDelete(id);

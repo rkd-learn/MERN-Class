@@ -23,9 +23,10 @@ app.use(logger);
 app.use(cors()); // CORS issue fix
 
 app.use("/user", userRoute);
-app.use("/product", productRoute);
 
-app.use("/cart", cartRoute)
+app.use("/product", verifyUser, productRoute);
+
+app.use("/cart", verifyUser, cartRoute)
 
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
