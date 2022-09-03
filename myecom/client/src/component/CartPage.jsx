@@ -44,7 +44,6 @@ export const CartPage = () => {
         setCart(result.data);
       }
       catch (e) {
-        console.log("EE", e)
         setErr(e?.response?.data?.error ?? e.messsage)
       }
     }
