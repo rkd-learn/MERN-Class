@@ -30,6 +30,11 @@ export const Nav = () => {
             <NavLink className="nav-link" to="/product">Product</NavLink>
           </li>
 
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/cart">My Cart</NavLink>
+          </li>
+
+
           {
             token ? (
               <li className="nav-item">

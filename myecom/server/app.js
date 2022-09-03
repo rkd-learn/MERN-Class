@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 
+const path = require("path")
+
 require("dotenv").config();
 
 const logger = require("./middleware/logger");
@@ -16,7 +18,11 @@ const app = express();
 
 const PORT = process.env.APP_PORT || 3000;
 
+app.use("/uploads", express.static(path.join(__dirname, "uploads")))
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 app.use(logger);
 

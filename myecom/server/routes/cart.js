@@ -3,9 +3,10 @@ const router = express.Router();
 
 // Importing product model
 const Cart = require("../db/models/cart");
+const CartItem = require("../db/models/cartItem");
 
-// get list of cats
-router.get("/", async (req, res) => {
+// get list of cats admin
+router.get("/list", async (req, res) => {
 
   const carts = await Cart.find();
 
@@ -16,11 +17,13 @@ router.get("/:id", async (req, res) => {
   const id = req.params.id;
 
   const cartData = await Cart.findById(id)
-    .populate("productID")
-    .populate("userID");
-
+    .populate({
+      path: 'items',
+      populate: {
+        path: 'product',
+      }
+    })
   res.send(cartData)
-
 })
 
 // Update Carts
@@ -40,6 +43,10 @@ router.put("/:id", async (req, res) => {
       oldData.status = newData.status;
     }
 
+    if (newData.productID && !oldData.products.includes(newData.productID)) {
+      oldData.products.push(newData.productID)
+    }
+
     const updatedData = await oldData.save();
 
     res.send(updatedData);
@@ -47,7 +54,6 @@ router.put("/:id", async (req, res) => {
     console.log(er);
   }
 });
-
 
 // Delete Cart
 router.delete("/:id", async (req, res) => {
@@ -58,16 +64,22 @@ router.delete("/:id", async (req, res) => {
   res.send(`Cart with id ${id} deleted`);
 });
 
-// Create new Cart
+// Create new Cart and add product to cart
 router.post("/", async (req, res) => {
   // Business logic
 
   const data = req.body;
 
+  const cartItem = new CartItem({
+    product: data.productID,
+    Qty: data.Qty
+  })
+
+  const savedCartItem = await cartItem.save();
+
   const newProduct = new Cart({
     userID: data.userID,
-    productID: data.productID,
-    Qty: data.Qty,
+    items: [savedCartItem._id],
     status: data.status || 'pending',
   });
 
@@ -75,6 +87,49 @@ router.post("/", async (req, res) => {
 
   res.send(savedProduct);
 });
+
+// add product on existing cart
+router.put("/:id/existing", async (req, res) => {
+
+  // Business logic
+  const id = req.params.id;
+
+  const oldData = await Cart.findById(id);
+
+  if (!oldData) {
+    res.status(400).json({
+      message: `Cart not found with id:${id}`
+    })
+  }
+
+  const newData = req.body;
+
+  const oldCartItem = await CartItem.findOne({
+    product: newData.productID
+  })
+
+  if (oldCartItem) {
+    oldCartItem.Qty = oldCartItem.Qty + newData.Qty
+
+    await oldCartItem.save()
+  }
+
+  if (newData.productID && !oldCartItem) {
+    const cartItem = new CartItem({
+      product: newData.productID,
+      Qty: newData.Qty || 0
+    })
+
+    const savedCartItem = await cartItem.save();
+
+    oldData.items.push(savedCartItem._id)
+  }
+
+  const updatedData = await oldData.save();
+
+  res.send(updatedData);
+});
+
 
 module.exports = router;
 

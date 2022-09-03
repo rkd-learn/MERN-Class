@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 
 import Axios from "axios";
 
-export const Product = () => {
+import { Product } from "./Product"
+
+import { API_URL } from "../config/config"
+
+export const ProductPage = () => {
 
   const [products, setProducts] = useState({});
 
@@ -22,9 +26,8 @@ export const Product = () => {
           _headers.Authorization = `Bearer ${token}`
         }
 
-
         const result = await Axios(
-          'http://localhost:9000/product',
+          `${API_URL}/product`,
           {
             headers: _headers
           }
@@ -33,7 +36,8 @@ export const Product = () => {
         setProducts(result.data);
       }
       catch (e) {
-        setErr(e.response.data.error)
+        console.log("EE", e)
+        setErr(e?.response?.data?.error ?? e.messsage)
       }
     }
     fetchData();
@@ -52,14 +56,7 @@ export const Product = () => {
     <div>
       ProductPage
       {
-        products?.map((product, index) => (
-          <div key={index}>
-            <h1>Name: {product.name}</h1>
-            <h2>Price: ${product.price}</h2>
-            <h2>Size : {product.size}</h2>
-            <h2>Brand : {product.brand}</h2>
-          </div>
-        )
+        products?.map((product) => <Product key={product._id} product={product} />
         )
       }
     </div>

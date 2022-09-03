@@ -1,25 +1,36 @@
 const express = require("express");
 const router = express.Router();
 
+const { upload } = require("../utils/multer")
+
 // Importing product model
 const Product = require("../db/models/product");
 
-
 // Create new product
-router.post("/", async (req, res) => {
+router.post("/", upload.single("productImage"), async (req, res) => {
   // Business logic
-  const data = req.body;
 
-  const newProduct = new Product({
-    price: data.price,
-    name: data.name,
-    brand: data.brand,
-    size: data.size
-  });
+  try {
 
-  const savedProduct = await newProduct.save();
+    const data = req.body;
 
-  res.send(savedProduct);
+    const newProduct = new Product({
+      price: data.price,
+      name: data.name,
+      brand: data.brand,
+      size: data.size,
+      image: req.file && req.file?.path
+    });
+
+    const savedProduct = await newProduct.save();
+
+    res.send(savedProduct);
+  } catch (error) {
+    console.log("ERR", error)
+    res.json({
+      error: error.message
+    })
+  }
 });
 
 
