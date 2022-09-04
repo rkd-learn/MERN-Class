@@ -13,7 +13,7 @@ const validateUser = require("../middleware/auth.middleware")
 // create user
 router.post("/signup", async (req, res) => {
 
-  const { name, email, password, address } = req.body
+  const { name, email, password, address, shippingAddress } = req.body
 
   try {
 
@@ -21,7 +21,8 @@ router.post("/signup", async (req, res) => {
 
     const newUser = new User({
       name,
-      address,
+      address: [address],
+      shippingAddress: shippingAddress ? [shippingAddress] : undefined,
       email,
       password: hash
     });
@@ -39,6 +40,35 @@ router.post("/signup", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
+
+// 
+router.post("/guest", async (req, res) => {
+
+  const { name, email, address, shippingAddress } = req.body
+
+  try {
+
+    const newUser = new User({
+      name,
+      address: [address],
+      shippingAddress: shippingAddress ? [shippingAddress] : undefined,
+      email,
+    });
+
+    const savedUser = await newUser.save();
+
+    res.send(savedUser);
+  } catch (error) {
+    if (error.message?.includes("duplicate")) {
+      res.status(400).send(`User with name ${req.body.name} is already exist `);
+
+      return;
+    }
+
+    res.status(400).send(error.message);
+  }
+});
+
 
 
 // user login
@@ -88,13 +118,32 @@ router.get("/list", validateUser, async (req, res) => {
   res.send(users);
 });
 
-router.get("/byid/:id", validateUser, async (req, res) => {
+router.get("/:id", validateUser, async (req, res) => {
   const id = req.params.id;
 
   const user = await User.findById(id);
 
   res.send(user);
 });
+
+
+// user update
+router.put("/shipping/:id", async (req, res) => {
+  const id = req.params.id;
+
+  const data = req.body;
+
+  const alreadySavedUser = await User.findById(id);
+
+  if (data.shippingAddress) {
+    alreadySavedUser.shippingAddress.push(data.shippingAddress)
+  }
+
+  const updatedUser = await alreadySavedUser.save();
+
+  res.send(updatedUser);
+});
+
 
 // user update
 router.put("/update/:id", validateUser, async (req, res) => {

@@ -10,6 +10,9 @@ const logger = require("./middleware/logger");
 const userRoute = require("./routes/users");
 const cartRoute = require("./routes/cart")
 const productRoute = require("./routes/products");
+const orderRoute = require("./routes/order");
+
+
 const verifyUser = require("./middleware/auth.middleware");
 
 require("./db/connections");
@@ -32,7 +35,9 @@ app.use("/user", userRoute);
 
 app.use("/product", verifyUser, productRoute);
 
-app.use("/cart", verifyUser, cartRoute)
+app.use("/cart", verifyUser, cartRoute);
+app.use("/order", orderRoute);
+
 
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);

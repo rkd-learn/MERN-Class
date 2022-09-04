@@ -4,8 +4,9 @@ import { useEffect } from "react"
 import Axios from "axios";
 
 import { API_URL } from "../config/config"
+import { Link } from "react-router-dom";
 
-export const CartPage = () => {
+export const CartComponent = ({ isOrderPage = false, isUserInfoAvailable = false, placeOrder }) => {
 
   const cartID = localStorage.getItem("CART_ID");
 
@@ -27,10 +28,6 @@ export const CartPage = () => {
       console.error(eer)
     }
 
-  }
-
-  const placeOrder = async () => {
-    // TODO: place order logic
   }
 
   useEffect(() => {
@@ -67,23 +64,39 @@ export const CartPage = () => {
   }
 
 
-
-
   return (
     <div>
-      {
-        cart.items?.map(item => (
-          <div key={item._id}>
-            <img src={`${API_URL}/${item.product.image}`} alt={item.product.name} width={200} height={200} />
-            <h1>Name: {item.product.name}</h1>
-            <h1>Qty: {item.Qty}</h1>
-            <h1>Total Price: {item.Qty * item.product.price}</h1>
+      <div className="row">
+        {
+          cart.items?.map(item => (
+            <div className="col-4 p-2 p-2" key={item._id}>
+              <img src={`${API_URL}/${item.product.image}`} alt={item.product.name} width={200} height={200} />
+              <h6>Name: {item.product.name}</h6>
+              <h6>Qty: {item.Qty}</h6>
+              <h6>Total Price: {item.Qty * item.product.price}</h6>
 
-          </div>
-        ))
+            </div>
+
+          ))
+        }
+      </div>
+      {
+        !isOrderPage && (
+          <>
+            <button className="btn btn-primary mr-4" onClick={removeCart}>Remove Cart</button>
+            <Link to="/order" >
+              <a className="btn btn-primary mr-4">
+                Go to Order Page
+              </a>
+            </Link>
+          </>
+        )}
+
+      {
+        isOrderPage && isUserInfoAvailable && (
+          <button className="btn btn-primary" onClick={placeOrder}>Place Order</button>
+        )
       }
-      <button onClick={removeCart}>Remove Cart</button>
-      <button onClick={placeOrder}>Place Order</button>
     </div>
   )
 }

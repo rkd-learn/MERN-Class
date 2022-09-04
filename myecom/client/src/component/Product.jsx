@@ -25,8 +25,6 @@ export const Product = ({ product }) => {
       return
     }
 
-
-
     if (qty <= 0) {
       alert("Product qty 0 or negative")
       return
@@ -49,16 +47,18 @@ export const Product = ({ product }) => {
   }
 
   return (
-    <div>
-      <img src={`${API_URL}/${product.image}`} alt={product.name} width={200} height={200} />
-      <h1>Name: {product.name}</h1>
-      <h2>Price: ${product.price}</h2>
-      <h2>Size : {product.size}</h2>
-      <h2>Brand : {product.brand}</h2>
-      <label htmlFor="qty">Qty      </label>
-      <input value={qty} onChange={(e) => setQty(e.target.value)} type='number' id="qty" name="qty" />
-      <button onClick={() => handleAddToCart(product._id, product.name)}>Add to cart </button>
-      <hr />
+    <div className="card">
+      <img className="img-fluid img-rounded" src={`${API_URL}/${product.image}`} style={{ maxHeight: '200px' }} alt={product.name} />
+      <div className="card-body">
+        <h5 className="card-title">Name: {product.name}</h5>
+        <h6>Price: ${product.price}</h6>
+        <h6>Size : {product.size}  </h6>
+        <h6>Brand : {product.brand}</h6>
+        <div class="form-group-inline">
+          <input className="form-control" placeholder="Qty" value={qty} onChange={(e) => setQty(e.target.value)} type='number' id="qty" name="qty" />
+        </div>
+        <button className="btn btn-primary" onClick={() => handleAddToCart(product._id, product.name)}>Add to cart </button>
+      </div>
     </div>
   )
 }

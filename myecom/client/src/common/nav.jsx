@@ -34,7 +34,9 @@ export const Nav = () => {
             <NavLink className="nav-link" to="/cart">My Cart</NavLink>
           </li>
 
-
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/order">Order</NavLink>
+          </li>
           {
             token ? (
               <li className="nav-item">

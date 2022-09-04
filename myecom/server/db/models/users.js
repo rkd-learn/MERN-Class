@@ -13,7 +13,8 @@ const UserSchema = new Schema({
     unique: true,
   },
 
-  address: String,
+  address: [String],
+  shippingAddress: [String],
 
   password: String
 });

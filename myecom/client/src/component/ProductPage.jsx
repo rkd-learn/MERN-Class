@@ -53,10 +53,13 @@ export const ProductPage = () => {
   }
 
   return (
-    <div>
-      ProductPage
+    <div className="row">
       {
-        products?.map((product) => <Product key={product._id} product={product} />
+        products.map(product => (
+          <div className="col-3 p-2 p-2" key={product._id} >
+            <Product product={product} />
+          </div>
+        )
         )
       }
     </div>

@@ -8,14 +8,13 @@ const OrderSchema = new Schema({
     ref: "Users",
   },
 
-  productID: {
+  cartId: {
     type: mongoose.Types.ObjectId,
-    ref: "Product",
+    ref: "Cart",
   },
 
-  Qty: Number,
-
-  status: String
+  paymentStatus: String,
+  deliveryStatus: String
 });
 
-module.exports  = mongoose.model("Order",OrderSchema)
+module.exports = mongoose.model("Order", OrderSchema)
