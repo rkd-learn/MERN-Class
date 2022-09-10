@@ -54,7 +54,7 @@ export const Product = ({ product }) => {
         <h6>Price: ${product.price}</h6>
         <h6>Size : {product.size}  </h6>
         <h6>Brand : {product.brand}</h6>
-        <div class="form-group-inline">
+        <div className="form-group-inline">
           <input className="form-control" placeholder="Qty" value={qty} onChange={(e) => setQty(e.target.value)} type='number' id="qty" name="qty" />
         </div>
         <button className="btn btn-primary" onClick={() => handleAddToCart(product._id, product.name)}>Add to cart </button>

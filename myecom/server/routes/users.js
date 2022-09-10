@@ -12,9 +12,7 @@ const validateUser = require("../middleware/auth.middleware")
 
 // create user
 router.post("/signup", async (req, res) => {
-
   const { name, email, password, address, shippingAddress } = req.body
-
   try {
 
     const hash = await bcrypt.hash(password, 10)
@@ -47,7 +45,7 @@ router.post("/guest", async (req, res) => {
   const { name, email, address, shippingAddress } = req.body
 
   try {
-
+    
     const newUser = new User({
       name,
       address: [address],
@@ -118,6 +116,21 @@ router.get("/list", validateUser, async (req, res) => {
   res.send(users);
 });
 
+router.get("/profile",validateUser,async(req,res)=>{
+  const userID= req.headers.userID
+
+  if(userID){
+    const user = await User.findById(userID);
+
+    res.send(user);
+  } else {
+    res.status(400).send({
+      message: "ERROR",
+    });
+  }
+
+})
+
 router.get("/:id", validateUser, async (req, res) => {
   const id = req.params.id;
 
@@ -143,7 +156,6 @@ router.put("/shipping/:id", async (req, res) => {
 
   res.send(updatedUser);
 });
-
 
 // user update
 router.put("/update/:id", validateUser, async (req, res) => {

@@ -23,9 +23,20 @@ export const OrderPage = () => {
 
     const userID = localStorage.getItem("USER_ID")
 
+    const token = localStorage.getItem("ACCESS_TOKEN")
+
     async function getUserInfo(userID) {
       try {
-        const res = await Axios.get(`${API_URL}/user/${userID}`)
+
+        const url = userID?`${API_URL}/user/${userID}`:`${API_URL}/user/profile`
+
+        const headers = token?{
+          "Authorization":`Bearer ${token}`
+        }:{}
+
+        const res = await Axios.get(url,{
+          headers
+        })
 
         if (res.data) {
           setUser(res.data)
@@ -36,7 +47,7 @@ export const OrderPage = () => {
       }
     }
 
-    if (userID) {
+    if (userID|| token ) {
       getUserInfo(userID)
     }
 
@@ -101,7 +112,6 @@ export const OrderPage = () => {
     }
 
   }
-
   return (
     <div id="billing" className="row">
       {err && <h2 style={{
@@ -110,11 +120,13 @@ export const OrderPage = () => {
       }}>{err}</h2>}
 
       <div className="col-6">
-
         {
           user ? (
             <>
-              <h2> {user.name}</h2>
+              <h6>Name: {user.name}</h6>
+              <h6>Email: {user.email}</h6>
+              <h6>Address: {user.address.join(",")}</h6>
+              <h6>shipping Address: {user.shippingAddress}</h6>
             </>
           ) : (
 
