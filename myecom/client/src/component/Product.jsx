@@ -29,18 +29,13 @@ export const Product = ({ product }) => {
       alert("Product qty 0 or negative")
       return
     }
-    try {
-      const cartData = await Axios.post(`${API_URL}/cart`, {
-        Qty: qty,
-        productID: id
-      })
 
       if (cartData.data._id) {
         localStorage.setItem("CART_ID", cartData.data._id)
         alert(`${name} is added on cart`)
       }
 
-    } catch (e) {
+    }catch (e) {
       console.error(e)
     }
 
@@ -48,7 +43,7 @@ export const Product = ({ product }) => {
 
   return (
     <div className="card">
-      <img className="img-fluid img-rounded" src={`${API_URL}/${product.image}`} style={{ maxHeight: '200px' }} alt={product.name} />
+      <img className="img-fluid img-rounded" src={`${API_URL}/${product.image}`} style={{ height: '200px' }} alt={product.name} />
       <div className="card-body">
         <h5 className="card-title">Name: {product.name}</h5>
         <h6>Price: ${product.price}</h6>

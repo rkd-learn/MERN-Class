@@ -43,14 +43,28 @@ router.get("/", async (req, res) => {
 });
 
 
+// get list of products
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+
+  const product = await Product.findById(id);
+
+  res.send(product);
+});
+
 // Update porduct
-router.put("/:id", async (req, res) => {
+router.put("/:id", upload.single("productImage"), async (req, res) => {
   try {
     const id = req.params.id;
 
     const oldData = await Product.findById(id);
 
     const newData = req.body;
+
+
+    if(req.file && req.file?.path){
+      oldData.image=req.file?.path
+    }
 
     if (newData.price) {
       oldData.price = newData.price;

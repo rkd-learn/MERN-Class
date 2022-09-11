@@ -106,6 +106,7 @@ export const OrderPage = () => {
       if (res.data) {
         alert("SuccessFully orderd")
         localStorage.setItem("ORDER_ID", res.data._id)
+        navitation("/pay")
       }
     } catch (e) {
       setErr(e.response.data.error || e.message)

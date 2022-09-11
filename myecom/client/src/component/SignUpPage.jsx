@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom"
 
 export const SignUpPage = () => {
 
-
   const navitation = useNavigate()
 
   const [loginData, setLoginData] = useState({
@@ -28,7 +27,6 @@ export const SignUpPage = () => {
     e.preventDefault()
 
     try {
-
       const res = await Axios.post("http://localhost:9000/user/signup",
         loginData
       )
