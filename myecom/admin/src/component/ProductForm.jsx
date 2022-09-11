@@ -93,9 +93,9 @@ export const ProductForm = () => {
         const formData = convertJsonToFormData(updatedData);
 
         await Axios.put(`${API_URL}/product/${id}`, formData);
+        alert("Product Updated")
       }
     } else {
-      console.log("ELSE")
       const payload = {
         ...data,
         productImage: data.productImage[0],

@@ -8,7 +8,24 @@ import { API_URL } from "../config/config"
 
 export const Home = () => {
 
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
+
+  
+  const handleDelete = async (id, name) => {
+    try {
+      const deletedProduct = await Axios.delete(`${API_URL}/product/${id}`);
+
+      if (deletedProduct.data) {
+        const productsAfterDelete = products.filter(product=>product._id !== id)
+
+        setProducts(productsAfterDelete)
+        alert(deletedProduct.data);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
 
   const [err, setErr] = useState(null)
 
@@ -57,7 +74,7 @@ export const Home = () => {
       {
         products.map(product => (
           <div className="col-3 p-2 p-2" key={product._id} >
-            <Product product={product} />
+            <Product product={product} handleDelete={handleDelete}/>
           </div>
         )
         )

@@ -4,10 +4,8 @@ const isObjectEqual = (obj1, obj2) => {
 };
 
 // Get only not equal object from two objects
-
 const getNotEqualObject = (obj1, obj2) => {
   const obj = {};
-
   Object.keys(obj1).forEach((key) => {
     if (!isObjectEqual(obj1[key], obj2[key])) {
       obj[key] = obj1[key];

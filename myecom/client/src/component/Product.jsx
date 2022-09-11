@@ -11,6 +11,8 @@ export const Product = ({ product }) => {
 
   const cartID = localStorage.getItem("CART_ID")
 
+
+
   const handleAddToCart = async (id, name) => {
     // API HIT to add product on cart
 
@@ -29,13 +31,18 @@ export const Product = ({ product }) => {
       alert("Product qty 0 or negative")
       return
     }
+    try {
+      const cartData = await Axios.post(`${API_URL}/cart`, {
+        Qty: qty,
+        productID: id
+      })
 
       if (cartData.data._id) {
         localStorage.setItem("CART_ID", cartData.data._id)
         alert(`${name} is added on cart`)
       }
 
-    }catch (e) {
+    } catch (e) {
       console.error(e)
     }
 

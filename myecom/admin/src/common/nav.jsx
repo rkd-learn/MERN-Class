@@ -28,11 +28,7 @@ export const Nav = () => {
           </li>
           
           <li className="nav-item">
-            <NavLink className="nav-link" to="/product">Product</NavLink>
-          </li>
-
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/order">Order</NavLink>
+            <NavLink className="nav-link" to="/product">Create Product</NavLink>
           </li>
           {
             token ? (
