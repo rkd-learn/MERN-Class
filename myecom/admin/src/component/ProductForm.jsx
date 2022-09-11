@@ -2,7 +2,7 @@ import { useState } from "react";
 import { API_URL } from "../config/config";
 
 import Axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import {

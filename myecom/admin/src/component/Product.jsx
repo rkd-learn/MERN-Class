@@ -23,7 +23,6 @@ export const Product = ({ product ,handleDelete}) => {
         <h6>Price: ${product.price}</h6>
         <h6>Size : {product.size} </h6>
         <h6>Brand : {product.brand}</h6>
-
         <Link to={`/product/${product._id}`}>
           <a className="btn btn-primary">Update</a>
         </Link>
